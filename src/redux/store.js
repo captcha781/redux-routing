@@ -3,7 +3,7 @@ import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
 import rootReducer from "./rootReducer";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 
 const persistConfig = {
   key: "root",
@@ -17,6 +17,9 @@ const persistConfig = {
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware({
     immutableCheck: false,
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+    }
   }).concat(thunk);
 
 const store = configureStore({
